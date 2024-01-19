@@ -57,4 +57,17 @@ void nop(stack_t **stack, unsigned int line_number);
 
 
 
+int usage_error(void);
+int malloc_error(void);
+int file_error(char *filename);
+int unknown_error(char *opcode, unsigned int line_number);
+int int_error(unsigned int line_number);
+
+int short_stack_error(unsigned int line_number, char *op);
+int div_error(unsigned int line_number);
+int pop_error(unsigned int line_number);
+int div_error(unsigned int line_number);
+int pchar_error(unsigned int line_number, char *message);
+
+
 #endif
