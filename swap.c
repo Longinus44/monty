@@ -1,30 +1,22 @@
-#!/bin/bash
-
 #include "monty.h"
 
 /**
- * swap - Swaps the top two value elements of a stack_t linked list.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * m_swap_nodes - Swaps the top two elements of the stack.
+ * @stack: Pointer to a pointer pointing to top node of the stack.
+ * @line_number: Interger representing the line number of of the opcode.
  */
-void swap(stack_t **stack, unsigned int line_number)
+void m_swap(stack_t **stack, unsigned int line_number)
 {
-    stack_t *tmp;
+	stack_t *tmp;
 
-
-    if ((*stack)->next == NULL || (*stack)->next->next == NULL)
-    {
-        set_op_tok_error(short_stack_error(line_number, "swap"));
-        return;
-    }
-
-
-    tmp = (*stack)->next->next;
-    (*stack)->next->next = tmp->next;
-    (*stack)->next->prev = tmp;
-    if (tmp->next)
-        tmp->next->prev = (*stack)->next;
-    tmp->next = (*stack)->next;
-    tmp->prev = *stack;
-    (*stack)->next = tmp;
+	if (stack == NULL || *stack == NULL || (*stack)->next == NULL)
+		more_err(8, line_number, "swap");
+	tmp = (*stack)->next;
+	(*stack)->next = tmp->next;
+	if (tmp->next != NULL)
+		tmp->next->prev = *stack;
+	tmp->next = *stack;
+	(*stack)->prev = tmp;
+	tmp->prev = NULL;
+	*stack = tmp;
 }

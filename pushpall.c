@@ -1,29 +1,45 @@
 #include "monty.h"
 
 
-void push(stack_t **stack, unsigned int line_number, int value) {
-    stack_t *new_node = malloc(sizeof(stack_t));
-    if (new_node == NULL) {
-        fprintf(stderr, "Error: Unable to allocate memory\n");
-        exit(EXIT_FAILURE);
-    }
+/**
+ * push - Adds a node to the stack.
+ * @new_node: Pointer to the new node.
+ * @ln: Interger representing the line number.
+ */
+void push(stack_t **new_node, __attribute__((unused))unsigned int ln)
+{
+	stack_t *tmp;
 
-    new_node->n = value;
-    new_node->prev = NULL;
-    new_node->next = *stack;
-
-    if (*stack != NULL) {
-        (*stack)->prev = new_node;
-    }
-
-    *stack = new_node;
+	if (new_node == NULL || *new_node == NULL)
+		exit(EXIT_FAILURE);
+	if (head == NULL)
+	{
+		head = *new_node;
+		return;
+	}
+	tmp = head;
+	head = *new_node;
+	head->next = tmp;
+	tmp->prev = head;
 }
 
-void pall(stack_t **stack, unsigned int line_number) {
-    stack_t *current = *stack;
 
-    while (current != NULL) {
-        printf("%d\n", current->n);
-        current = current->next;
-    }
+/**
+ * pall - Adds a node to the stack.
+ * @stack: Pointer to a pointer pointing to top node of the stack.
+ * @line_number: line number of  the opcode.
+ */
+void pall(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp;
+
+	(void) line_number;
+	if (stack == NULL)
+		exit(EXIT_FAILURE);
+	tmp = *stack;
+	while (tmp != NULL)
+	{
+		printf("%d\n", tmp->n);
+		tmp = tmp->next;
+	}
 }
