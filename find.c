@@ -20,7 +20,7 @@ void find_func(char *opcode, char *value, int ln, int format)
 		{"swap", m_swap},
 		{"add", m_add},
 		{"sub", m_sub},
-		{"div", div},
+		{"div", m_div},
 		{"mul", m_mul},
 		{"mod", m_mod},
 		{"push", push},
