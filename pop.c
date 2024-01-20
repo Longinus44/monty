@@ -1,27 +1,22 @@
-#!/bin/bash
-
 #include "monty.h"
 
+
+
 /**
- * pop - Removes the top value element of a stack_t linked list.
- * @stack: A pointer to the top mode node of a stack_t linked list.
- * @line_number: The current working line number of a Monty bytecodes file.
+ * pop - Adds a node to the stack.
+ * @stack: Pointer to a pointer pointing to top node of the stack.
+ * @line_number: Interger representing the line number of of the opcode.
  */
-void monty_pop(stack_t **stack, unsigned int line_number)
+void pop(stack_t **stack, unsigned int line_number)
 {
-    stack_t *next = NULL;
+	stack_t *tmp;
 
+	if (stack == NULL || *stack == NULL)
+		more_err(7, line_number);
 
-    if ((*stack)->next == NULL)
-    {
-        set_op_tok_error(pop_error(line_number));
-        return;
-    }
-
-    next = (*stack)->next->next;
-      free((*stack)->next);
-    if (next)
-        next->prev = *stack;
-    (*stack)->next = next;
-
+	tmp = *stack;
+	*stack = tmp->next;
+	if (*stack != NULL)
+		(*stack)->prev = NULL;
+	free(tmp);
 }
