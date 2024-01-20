@@ -9,9 +9,6 @@
 #include <ctype.h>
 #include <stdarg.h>
 
-#define STACK_SIZE 100
-
-
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -26,7 +23,7 @@ typedef struct stack_s
         int n;
         struct stack_s *prev;
         struct stack_s *next;
-} stack_t;
+} tstack_t;
 
 /**
  * struct instruction_s - opcode and its function
@@ -42,32 +39,44 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+extern stack_t *head;
+typedef void (*op_func)(stack_t **, unsigned int);
 
-void push(stack_t **stack, unsigned int line_number);
-void pall(stack_t **stack, unsigned int line_number);
-void pint(stack_t **stack, unsigned int line_number);
-void pop(stack_t **stack, unsigned int line_number);
-void swap(stack_t **stack, unsigned int line_number);
-void add(stack_t **stack, unsigned int line_number);
-void sub(stack_t **stack, unsigned int line_number);
-void div(stack_t **stack, unsigned int line_number);
-void mul(stack_t **stack, unsigned int line_number);
-void mod(stack_t **stack, unsigned int line_number);
-void nop(stack_t **stack, unsigned int line_number);
+stack_t *create_node(int n);
+void free_nodes(void);
+void print_stack(stack_t **, unsigned int);
+void push(stack_t **, unsigned int);
+void pall(stack_t **, unsigned int);
+
+void call_fun(op_func, char *, char *, int, int);
+
+void m_add(stack_t **, unsigned int);
+void m_sub(stack_t **, unsigned int);
+void m_div(stack_t **, unsigned int);
+void m_mul(stack_t **, unsigned int);
+void m_mod(stack_t **, unsigned int);
+
+void pchar(stack_t **, unsigned int);
+void pstr(stack_t **, unsigned int);
+void rotl(stack_t **, unsigned int);
 
 
+void file_open(char *file_name);
+int parse_line(char *buffer, int line_number, int format);
+void file_read(FILE *);
+int len_chars(FILE *);
+void find_func(char *, char *, int, int);
 
-int usage_error(void);
-int malloc_error(void);
-int file_error(char *filename);
-int unknown_error(char *opcode, unsigned int line_number);
-int int_error(unsigned int line_number);
 
-int short_stack_error(unsigned int line_number, char *op);
-int div_error(unsigned int line_number);
-int pop_error(unsigned int line_number);
-int div_error(unsigned int line_number);
-int pchar_error(unsigned int line_number, char *message);
+void pint(stack_t **, unsigned int);
+void pop(stack_t **, unsigned int);
+void nop(stack_t **, unsigned int);
+void m_swap(stack_t **, unsigned int);
 
+
+void err(int error_code, ...);
+void more_err(int error_code, ...);
+void string_err(int error_code, ...);
+void rotr(stack_t **, unsigned int);
 
 #endif
